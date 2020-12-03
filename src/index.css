@@ -13,5 +13,5 @@ html {
 
 .card-page {
   @apply bg-white shadow-lg p-6 rounded-lg text-center;
-  @apply w-full sm:max-w-sm min-h-full sm:min-h-0 flex flex-col justify-center;
+  @apply w-full sm:max-w-sm min-h-screen sm:min-h-0 flex flex-col justify-center;
 }
