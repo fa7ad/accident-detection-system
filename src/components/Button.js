@@ -1,5 +1,15 @@
 function Button({ className = '', variant = 'indigo', ...props }) {
-  const variantClasses = `bg-${variant}-700 focus:bg-${variant}-900 hover:bg-${variant}-800 focus:ring-${variant}-600`
+  const variantClasses =
+    variant === 'red'
+      ? 'bg-red-700 focus:bg-red-900 hover:bg-red-800 focus:ring-red-600'
+      : variant === 'blue'
+      ? 'bg-blue-700 focus:bg-blue-900 hover:bg-blue-800 focus:ring-blue-600'
+      : variant === 'indigo'
+      ? 'bg-indigo-700 focus:bg-indigo-900 hover:bg-indigo-800 focus:ring-indigo-600'
+      : variant === 'purple'
+      ? 'bg-purple-700 focus:bg-purple-900 hover:bg-purple-800 focus:ring-purple-600'
+      : 'bg-gray-700 focus:bg-gray-900 hover:bg-gray-800 focus:ring-gray-600'
+
   return (
     <button
       className={`${variantClasses}
