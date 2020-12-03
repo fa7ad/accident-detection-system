@@ -1,1 +1,1 @@
-module.exports = ['env', ['use-postcss-config']]
+module.exports = [['use-postcss-config'], ['use-eslint-config', '.eslintrc.yml']]

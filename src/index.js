@@ -1,13 +1,21 @@
-import React from 'react'
+import * as React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import App from './App'
-import * as serviceWorkerRegistration from './serviceWorkerRegistration'
+import { HashRouter, BrowserRouter } from 'react-router-dom'
+
+import Routes from './Routes'
+
 import reportWebVitals from './reportWebVitals'
+import * as serviceWorkerRegistration from './serviceWorkerRegistration'
+
+import './index.css'
+
+const Router = process.env.NODE_ENV === 'production' ? HashRouter : BrowserRouter
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Routes />
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 )
@@ -20,4 +28,4 @@ serviceWorkerRegistration.unregister()
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()
+reportWebVitals(console.log)
