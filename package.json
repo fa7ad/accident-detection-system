@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "homepage": "/accident-detection-system",
+  "homepage": ".",
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

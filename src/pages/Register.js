@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom'
 
-import Input from 'components/Input'
 import Button from 'components/Button'
+import { Input } from 'components/Input'
 
 function Register() {
   const history = useHistory()
