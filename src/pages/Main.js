@@ -20,17 +20,32 @@ const Main = () => {
 
   const showAccidentAlert = () =>
     Alert.fire({
-      timer: 6e4,
+      timer: 6e3,
       icon: 'warning',
       title: <span className='text-2xl'>Accident detected!</span>,
       html:
         'If this was a mistake, click cancel.<br />' +
         'Incident will be atomatically reported if not cancelled.<br/>' +
-        `Your local Police station number is <a href="tel:${phoneNums[0]}"><strong>${phoneNums[0]}</strong></a>`,
+        `Your local Police station number is <a href="tel:${phoneNums[0]}"><strong>${phoneNums[0]}</strong></a><br/><br/>` +
+        `Other DMP numbers: <br/>` +
+        phoneNums
+          .slice(1)
+          .map(num => `<a href="tel:${num}"><b>${num}</b></a>`)
+          .join('<br />'),
+
       showCancelButton: true,
       showConfirmButton: false,
       timerProgressBar: true,
       allowOutsideClick: false
+    }).then(val => {
+      if (val.dismiss === Alert.DismissReason.timer) {
+        const els = phoneNums.map(num => `<a href="tel:${num}"><b>${num}</b></a>`).join('<br />')
+        const el$ = document.createElement('div')
+        el$.innerHTML = els
+        const pols = el$.querySelectorAll('a')
+        pols[0].click()
+        pols.forEach(number => setTimeout(() => number.click(), 15e3))
+      }
     })
 
   const handleKeyPress = e => {
