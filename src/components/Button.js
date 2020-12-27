@@ -1,4 +1,4 @@
-function Button({ className = '', variant = 'indigo', ...props }) {
+function Button({ variant = '', className = '', ...props }) {
   return <button className={`button ${variant} ${className}`} {...props} />
 }
 

@@ -1,12 +1,16 @@
 // import { useHistory } from 'react-router-dom'
 
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLocationArrow, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 import Alert from 'utils/alert'
 import Button from 'components/Button'
 
 import personImg from 'assets/person.png'
 import { DMP_BRANCHES } from 'utils/dmpData'
+import { Link } from 'react-router-dom'
 
 const Main = () => {
   // const history = useHistory()
@@ -20,18 +24,52 @@ const Main = () => {
 
   const showAccidentAlert = () =>
     Alert.fire({
-      timer: 60e3,
+      timer: 150e3,
       icon: 'warning',
       title: <span className='text-2xl'>Accident detected!</span>,
-      html:
-        'If this was a mistake, click cancel.<br />' +
-        'Incident will be atomatically reported if not cancelled.<br/>' +
-        `Your local Police station number is <a href="tel:${phoneNums[0]}"><strong>${phoneNums[0]}</strong></a><br/><br/>` +
-        `Other DMP numbers: <br/>` +
-        phoneNums
-          .slice(1)
-          .map(num => `<a href="tel:${num}"><b>${num}</b></a>`)
-          .join('<br />'),
+      html: (
+        <>
+          <div className='text-md'>
+            If this was a mistake, click cancel.
+            <br />
+            Incident will be atomatically reported if not cancelled.
+            <br />
+            Your local Police station number is{' '}
+            <a href={`tel:${phoneNums[0]}`}>
+              <strong>{phoneNums[0]}</strong>
+            </a>
+          </div>
+          <br />
+          Other DMP numbers: <br />
+          {phoneNums.slice(1).map(num => (
+            <Fragment key={num}>
+              <a href={`tel:${num}`}>
+                <b>{num}</b>
+              </a>
+              <br />
+            </Fragment>
+          ))}
+          <hr className='my-2' />
+          <p className='text-sm'>Call Police</p>
+          <section className='reporting'>
+            {phoneNums.map((num, i) => (
+              <a key={num} href={`tel:${num}`} className={`button ${['', 'blue', 'indigo', 'red'][i % 4]}`}>
+                Call {num}
+              </a>
+            ))}
+          </section>
+          <hr className='my-2' />
+          <p className='text-sm'>Emergency Contact</p>
+          <section className='reporting'>
+            <a href='tel:+8801701227057' className='button red'>
+              Call Emergency Contact
+            </a>
+            <a href='tel:+8801701227057' className='button red'>
+              Text Emergency Contact
+            </a>
+          </section>
+        </>
+      ),
 
       showCancelButton: true,
       showConfirmButton: false,
@@ -71,6 +109,20 @@ const Main = () => {
 
   const handleAreaSelect = e => setArea(e.target.value)
 
+  const profileEdit = {
+    pathname: '/edit',
+    state: {
+      profile: true
+    }
+  }
+  const contactEdit = {
+    pathname: '/edit',
+    state: {
+      profile: false,
+      contact: true
+    }
+  }
+
   return (
     <div className='card-page'>
       <h2 className='text-2xl'>Welcome to AADS!</h2>
@@ -78,24 +130,44 @@ const Main = () => {
         Press <kbd className='kbd'>+</kbd> to demo auto alert!
       </p>
       <section className='profile'>
+        <Link to={profileEdit} className='button section__edit'>
+          <FontAwesomeIcon icon={faPencilAlt} />
+        </Link>
         <img className='profile__picture' src={personImg} alt='' />
         <p className='profile__name'>
-          <b>Name:</b> John Doe
+          <b>Name: </b>John Doe
         </p>
         <p className='profile__license'>
-          <b>Driving License Number:</b> 9126189361
+          <b>Driving License Number: </b>9126189361
+        </p>
+      </section>
+      <section className='emergency'>
+        <Link to={contactEdit} className='button section__edit'>
+          <FontAwesomeIcon icon={faPencilAlt} />
+        </Link>
+        <p className='text-lg'>Emergency Contact</p>
+        <p className='emergency__name'>
+          <b>Name: </b>Jane Doe
+        </p>
+        <p className='emergency__number'>
+          <b>Phone Number: </b> +8801701227057
         </p>
       </section>
       <label htmlFor='area' className='w-100 text-gray-300 text-left mt-2'>
         Select you area
       </label>
-      <select name='area' id='area' className='input-field' onChange={handleAreaSelect} value={area}>
-        {areas.map(({ value, label }) => (
-          <option value={value} key={value}>
-            {label}
-          </option>
-        ))}
-      </select>
+      <section className='flex items-center'>
+        <select name='area' id='area' className='input-field' onChange={handleAreaSelect} value={area}>
+          {areas.map(({ value, label }) => (
+            <option value={value} key={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+        <Button className='ml-2'>
+          <FontAwesomeIcon icon={faLocationArrow} />
+        </Button>
+      </section>
       <section className='police' dangerouslySetInnerHTML={{ __html: policeInfo }} />
       <Button variant='red' className='mt-4' onClick={handleManualReport}>
         Manually Report Accident!

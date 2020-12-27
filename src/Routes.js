@@ -1,9 +1,10 @@
 import { Route, Switch } from 'react-router-dom'
 
 import Home from 'pages/Home'
+import Main from 'pages/Main'
+import Edit from 'pages/Edit'
 import Login from 'pages/Login'
 import Register from 'pages/Register'
-import Main from 'pages/Main'
 
 const Routes = props => {
   return (
@@ -12,6 +13,7 @@ const Routes = props => {
       <Route path='/login' component={Login} />
       <Route path='/register' component={Register} />
       <Route path='/main' exact component={Main} />
+      <Route path='/edit' component={Edit} />
     </Switch>
   )
 }
