@@ -24,7 +24,7 @@ const Main = () => {
 
   const showAccidentAlert = () =>
     Alert.fire({
-      timer: 150e3,
+      timer: 20e3,
       icon: 'warning',
       title: <span className='text-2xl'>Accident detected!</span>,
       html: (
