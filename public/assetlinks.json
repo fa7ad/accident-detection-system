@@ -1,5 +1,5 @@
 [{
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "com.mildlyboring.twa",
-                   "sha256_cert_fingerprints": ["B2:38:7B:FB:BA:FF:3F:60:3A:61:FB:2D:16:7A:6A:22:95:FD:9E:47:A6:D2:1D:2B:D7:58:CE:DB:64:58:7D:2F"] }
+                   "sha256_cert_fingerprints": ["FA:B2:51:1B:7A:E7:4C:55:46:10:02:D2:90:E6:CA:5F:3C:D4:3D:CA:09:EE:10:D4:43:10:F0:BF:E8:76:B5:73"] }
     }]
