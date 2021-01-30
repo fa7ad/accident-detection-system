@@ -1,6 +1,6 @@
 import * as React from 'react'
 import ReactDOM from 'react-dom'
-import { HashRouter, BrowserRouter } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import Routes from './Routes'
 
@@ -9,7 +9,6 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 import './index.css'
 
-const Router = process.env.NODE_ENV === 'production' ? HashRouter : BrowserRouter
 
 ReactDOM.render(
   <React.StrictMode>
