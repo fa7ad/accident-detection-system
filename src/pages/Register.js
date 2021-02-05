@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function Register() {
+function Register({ setGlobalData }) {
   const history = useHistory()
   const classes = useStyles()
 
@@ -24,6 +24,7 @@ function Register() {
 
   const handleRegistration = e => {
     e.preventDefault()
+    setGlobalData(p => ({ ...p, auth: true }))
     history.push('/main')
   }
 
@@ -50,7 +51,7 @@ function Register() {
             autoOk
             required
             disableFuture
-            inputVariant="outlined"
+            inputVariant='outlined'
             format='DD/MM/YYYY'
             label='Date of Birth'
             views={['year', 'month', 'date']}

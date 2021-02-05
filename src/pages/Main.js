@@ -11,7 +11,8 @@ import {
   makeStyles,
   MenuItem,
   Paper,
-  Select
+  Select,
+  Typography
 } from '@material-ui/core'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -28,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2)
   },
   container: {
-    padding: theme.spacing(4, 0)
+    padding: theme.spacing(2, 0)
   },
   select: {
     marginRight: theme.spacing(2)
@@ -77,31 +78,20 @@ const Main = () => {
 
   const handleAreaSelect = e => setArea(e)
 
-  const profileEdit = {
-    pathname: '/edit',
-    state: {
-      profile: true
-    }
-  }
-  const contactEdit = {
-    pathname: '/edit',
-    state: {
-      profile: false,
-      contact: true
-    }
-  }
-
   return (
     <Container maxWidth='sm' className={classes.container}>
       <Paper className={classes.root}>
-        <h2 className='text-2xl'>Welcome to AADS!</h2>
-        <p className='text-gray-300 italic'>
+        <Typography variant='h5' align='center' component='h1'>
+          Welcome to ADRS!
+        </Typography>
+
+        <Typography variant='body2' align='center' component='p' className='italic' color='textSecondary'>
           Press <kbd className='kbd'>+</kbd> to demo auto alert!
-        </p>
+        </Typography>
         <Grid container fullWidth spacing={2} className={classes.infoGrid}>
           <Grid item xs={6}>
             <section className='profile'>
-              <Link to={profileEdit} className='button section__edit'>
+              <Link to='/edit-profile' className='button section__edit'>
                 <FontAwesomeIcon icon={faPencilAlt} />
               </Link>
               <img className='profile__picture' src={personImg} alt='' />
@@ -115,7 +105,7 @@ const Main = () => {
           </Grid>
           <Grid item xs={6}>
             <section className='emergency'>
-              <Link to={contactEdit} className='button section__edit'>
+              <Link to='/edit-emergency' className='button section__edit'>
                 <FontAwesomeIcon icon={faPencilAlt} />
               </Link>
               <p className='text-lg'>Emergency Contact</p>
@@ -196,21 +186,27 @@ function createEmergencyAlert(phoneNums) {
           ))}
           <hr className='my-2' />
           <p className='text-sm'>Call Police</p>
-          <section className='reporting'>
+          <section className='reporting -px-1'>
             {phoneNums.map((num, i) => (
-              <a key={num} href={`tel:${num}`} className={`button ${['', 'blue', 'indigo', 'red'][i % 4]}`}>
-                Call {num}
+              <a key={num} href={`tel:${num}`} className='p-1'>
+                <Button variant='contained' color='primary'>
+                  Call {num}
+                </Button>
               </a>
             ))}
           </section>
           <hr className='my-2' />
           <p className='text-sm'>Emergency Contact</p>
           <section className='reporting'>
-            <a href='tel:+8801701227057' className='button red'>
-              Call Emergency Contact
+            <a href='tel:+8801701227057' className='px-1'>
+              <Button variant='contained' color='secondary'>
+                Call Emergency Contact
+              </Button>
             </a>
-            <a href='tel:+8801701227057' className='button red'>
-              Text Emergency Contact
+            <a href='tel:+8801701227057' className='px-1'>
+              <Button variant='contained' color='secondary'>
+                Text Emergency Contact
+              </Button>
             </a>
           </section>
         </>

@@ -14,12 +14,13 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function Login() {
+function Login({ setGlobalData }) {
   const history = useHistory()
   const classes = useStyles()
 
   const handleLogin = e => {
     e.preventDefault()
+    setGlobalData(p => ({ ...p, auth: true }))
     history.push('/main')
   }
 

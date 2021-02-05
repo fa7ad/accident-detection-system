@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
-
+import createPersistedState from 'use-persisted-state'
 import { makeStyles, Typography, Link } from '@material-ui/core'
 
 import APP_ROUTES from 'pages'
@@ -21,24 +20,29 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const useGlobalState = createPersistedState('adrs__global__mui::v1', localStorage)
+
 const App = props => {
   const classes = useStyles()
 
-  const [globalData, setGlobalData] = useState({
+  const [globalData, setGlobalData] = useGlobalState({
     auth: false,
     title: 'ADRS'
   })
 
   return (
     <div className={classes.root}>
-      <NavBar auth={globalData.auth} title={globalData.title} setDate={setGlobalData} />
+      <NavBar auth={globalData.auth} title={globalData.title} globalData={globalData} setGlobalData={setGlobalData} />
       <div className='empty'>&nbsp;</div>
       <Switch>
-        {APP_ROUTES.map(({ component: Component, ...route }) => (
-          <Route {...route} key={route.key}>
-            {props => <Component {...props} onAuthComplete={setGlobalData} />}
-          </Route>
-        ))}
+        {APP_ROUTES.map(({ component, fallback, isPrivate, ...route }) => {
+          const Component = isPrivate ? (globalData.auth ? component : fallback) : component
+          return (
+            <Route {...route} key={route.key}>
+              {props => <Component {...props} globalData={globalData} setGlobalData={setGlobalData} />}
+            </Route>
+          )
+        })}
       </Switch>
       <Typography variant='body2' color='textSecondary' align='center' className={classes.footer}>
         Copyright ©{' ' + new Date().getFullYear() + ' '}

@@ -1,9 +1,9 @@
-import Home from "./Home"
-import Main from "./Main"
-import Login from "./Login"
-import Register from "./Register"
-import EditProfile from "./EditProfile"
-import EditEmergency from "./EditEmergency"
+import Home from './Home'
+import Main from './Main'
+import Login from './Login'
+import Register from './Register'
+import EditProfile from './EditProfile'
+import EditEmergency from './EditEmergency'
 
 const APP_ROUTES = [
   {
@@ -21,22 +21,27 @@ const APP_ROUTES = [
     path: '/register',
     component: Register,
     key: 'register'
-
   },
   {
     path: '/main',
     component: Main,
-    key: 'main'
+    key: 'main',
+    isPrivate: true,
+    fallback: Home
   },
   {
     path: '/edit-profile',
     component: EditProfile,
-    key: 'edit-profile'
+    key: 'edit-profile',
+    isPrivate: true,
+    fallback: Home
   },
   {
     path: '/edit-emergency',
     component: EditEmergency,
-    key: 'edit-emergency'
+    key: 'edit-emergency',
+    isPrivate: true,
+    fallback: Home
   }
 ]
 
