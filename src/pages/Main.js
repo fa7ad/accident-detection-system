@@ -197,13 +197,13 @@ function createEmergencyAlert(phoneNums) {
           </section>
           <hr className='my-2' />
           <p className='text-sm'>Emergency Contact</p>
-          <section className='reporting'>
-            <a href='tel:+8801701227057' className='px-1'>
+          <section className='reporting -px-1'>
+            <a href='tel:+8801701227057' className='p-1'>
               <Button variant='contained' color='secondary'>
                 Call Emergency Contact
               </Button>
             </a>
-            <a href='tel:+8801701227057' className='px-1'>
+            <a href='tel:+8801701227057' className='p-1'>
               <Button variant='contained' color='secondary'>
                 Text Emergency Contact
               </Button>
