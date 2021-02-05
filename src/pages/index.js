@@ -1,9 +1,17 @@
+import { lazy } from 'react'
+import { createSuspendedComponent } from 'utils/createSuspendedComponent'
 import Home from './Home'
-import Main from './Main'
-import Login from './Login'
-import Register from './Register'
-import EditProfile from './EditProfile'
-import EditEmergency from './EditEmergency'
+const LazyMain = lazy(() => import('./Main'))
+const LazyLogin = lazy(() => import('./Login'))
+const LazyRegister = lazy(() => import('./Register'))
+const LazyEditProfile = lazy(() => import('./EditProfile'))
+const LazyEditEmergency = lazy(() => import('./EditEmergency'))
+
+const Main = createSuspendedComponent(LazyMain)
+const Login = createSuspendedComponent(LazyLogin)
+const Register = createSuspendedComponent(LazyRegister)
+const EditProfile = createSuspendedComponent(LazyEditProfile)
+const EditEmergency = createSuspendedComponent(LazyEditEmergency)
 
 const APP_ROUTES = [
   {
