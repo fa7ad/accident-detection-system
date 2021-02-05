@@ -1,10 +1,22 @@
 import { useHistory } from 'react-router-dom'
+import { Button, Container, makeStyles, TextField, Typography, Paper } from '@material-ui/core'
 
-import Button from 'components/Button'
-import { Input } from 'components/Input'
+import clsx from 'clsx'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(4, 2)
+  },
+  form: {
+    '& > *': {
+      margin: theme.spacing(1)
+    }
+  }
+}))
 
 function Login() {
   const history = useHistory()
+  const classes = useStyles()
 
   const handleLogin = e => {
     e.preventDefault()
@@ -12,14 +24,20 @@ function Login() {
   }
 
   return (
-    <div className='card-page'>
-      <h2 className='text-2xl font-bold'>Login</h2>
-      <form action='#' className='mt-4 flex flex-col justify-center' onSubmit={handleLogin}>
-        <Input name='username' placeholder='Username' type='text' />
-        <Input name='password' placeholder='Password' type='password' />
-        <Button type='submit'>Login</Button>
-      </form>
-    </div>
+    <Container maxWidth='sm'>
+      <Paper className={classes.root}>
+        <Typography align='center' variant='h4' component='h1'>
+          Login
+        </Typography>
+        <form action='#' className={clsx('mt-4 flex flex-col justify-center', classes.form)} onSubmit={handleLogin}>
+          <TextField name='username' label='Username' variant='outlined' />
+          <TextField name='password' label='Password' type='password' variant='outlined' />
+          <Button variant='contained' color='primary' type='submit' size='large'>
+            Login
+          </Button>
+        </form>
+      </Paper>
+    </Container>
   )
 }
 

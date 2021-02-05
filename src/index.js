@@ -1,20 +1,38 @@
 import * as React from 'react'
 import ReactDOM from 'react-dom'
+import DayjsUtils from '@date-io/dayjs'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { colors, createMuiTheme, CssBaseline, ThemeProvider } from '@material-ui/core'
 
-import Routes from './Routes'
+import App from './App'
 
 import reportWebVitals from './reportWebVitals'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 import './index.css'
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: colors.deepPurple[500]
+    },
+    secondary: {
+      main: colors.blueGrey[700]
+    }
+  }
+})
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Routes />
-    </Router>
+    <ThemeProvider theme={theme}>
+      <MuiPickersUtilsProvider utils={DayjsUtils}>
+        <CssBaseline />
+        <Router>
+          <App />
+        </Router>
+      </MuiPickersUtilsProvider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

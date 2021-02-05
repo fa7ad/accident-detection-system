@@ -1,10 +1,26 @@
+import clsx from 'clsx'
+import dayjs from 'dayjs'
+import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { KeyboardDatePicker } from '@material-ui/pickers'
+import { Button, Container, Grid, TextField, Paper, makeStyles, Typography } from '@material-ui/core'
 
-import Button from 'components/Button'
-import { Input } from 'components/Input'
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(4, 2)
+  },
+  form: {
+    '& > *': {
+      margin: theme.spacing(1, 0)
+    }
+  }
+}))
 
 function Register() {
   const history = useHistory()
+  const classes = useStyles()
+
+  const [dob, setDob] = useState(dayjs())
 
   const handleRegistration = e => {
     e.preventDefault()
@@ -12,25 +28,66 @@ function Register() {
   }
 
   return (
-    <div className='card-page sm:max-w-md'>
-      <h2 className='text-2xl font-bold'>Registration</h2>
-      <form action='#' className='mt-4 flex flex-col justify-center' onSubmit={handleRegistration}>
-        <Input name='full_name' placeholder='Full Name' type='text' />
-        <Input name='dob' placeholder='Date of birth' type='date' />
-        <Input name='phone' placeholder='Phone Number' type='tel' />
-        <hr />
+    <Container maxWidth='sm'>
+      <Paper className={classes.root}>
+        <Typography align='center' variant='h4' component='h1'>
+          Registration
+        </Typography>
+        <form
+          action='#'
+          className={clsx('mt-4 flex flex-col justify-center', classes.form)}
+          onSubmit={handleRegistration}>
+          <Grid container>
+            <Grid item xs={12} sm={6} className='pr-2'>
+              <TextField name='firstName' variant='outlined' required fullWidth label='First Name' autoFocus />
+            </Grid>
+            <Grid item xs={12} sm={6} className='pl-2'>
+              <TextField variant='outlined' required fullWidth label='Last Name' name='lastName' />
+            </Grid>
+          </Grid>
 
-        <Input name='username' placeholder='Username' type='text' />
-        <Input name='password' placeholder='Password' type='password' />
-        <Input name='confirm_password' placeholder='Confirm Password' type='password' />
-        <hr />
+          <KeyboardDatePicker
+            autoOk
+            required
+            disableFuture
+            inputVariant="outlined"
+            format='DD/MM/YYYY'
+            label='Date of Birth'
+            views={['year', 'month', 'date']}
+            onChange={d => setDob(d)}
+            value={dob}
+          />
+          <TextField variant='outlined' required fullWidth name='phone' label='Phone Number' type='tel' />
+          <hr />
 
-        <Input name='nid_number' placeholder='NID Number' type='text' />
-        <Input name='driving_license' placeholder='Driving License Number' type='text' />
+          <TextField variant='outlined' required fullWidth label='Username' name='username' />
+          <TextField variant='outlined' required fullWidth name='password' label='Password' type='password' />
+          <TextField
+            variant='outlined'
+            required
+            fullWidth
+            name='confirm_password'
+            label='Confirm Password'
+            type='password'
+          />
+          <hr />
 
-        <Button type='submit'>Register</Button>
-      </form>
-    </div>
+          <TextField variant='outlined' required fullWidth name='nid_number' label='NID Number' type='text' />
+          <TextField
+            variant='outlined'
+            required
+            fullWidth
+            name='driving_license'
+            label='Driving License Number'
+            type='text'
+          />
+
+          <Button variant='contained' color='primary' size='large' type='submit'>
+            Register
+          </Button>
+        </form>
+      </Paper>
+    </Container>
   )
 }
 

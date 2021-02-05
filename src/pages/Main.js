@@ -2,18 +2,48 @@
 
 import { Fragment, useEffect, useState } from 'react'
 
+import {
+  Button,
+  Container,
+  FormControl,
+  Grid,
+  InputLabel,
+  makeStyles,
+  MenuItem,
+  Paper,
+  Select
+} from '@material-ui/core'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationArrow, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 import Alert from 'utils/alert'
-import Button from 'components/Button'
 
 import personImg from 'assets/person.png'
 import { DMP_BRANCHES } from 'utils/dmpData'
 import { Link } from 'react-router-dom'
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(2)
+  },
+  container: {
+    padding: theme.spacing(4, 0)
+  },
+  select: {
+    marginRight: theme.spacing(2)
+  },
+  infoGrid: {
+    margin: theme.spacing(1, -1),
+    '& section': {
+      height: '100%'
+    }
+  }
+}))
+
 const Main = () => {
   // const history = useHistory()
+  const classes = useStyles()
   const [area, setArea] = useState('mohammadpur')
 
   const policeInfo = DMP_BRANCHES?.[area]
@@ -22,7 +52,122 @@ const Main = () => {
     .map(num => num.replace(/[^0-9+]/g, ''))
     .concat('999')
 
-  const showAccidentAlert = () =>
+  const showAccidentAlert = createEmergencyAlert(phoneNums)
+
+  const handleKeyPress = e => {
+    if (e.key === '+') showAccidentAlert()
+  }
+
+  const handleManualReport = e => {
+    e.preventDefault()
+    showAccidentAlert()
+  }
+
+  useEffect(() => {
+    document.body.addEventListener('keypress', handleKeyPress)
+    return () => {
+      document.body.removeEventListener('keypress', handleKeyPress)
+    }
+  }, [handleKeyPress])
+
+  const areas = Object.keys(DMP_BRANCHES).map(value => ({
+    label: value.replace(/^(\w)|\W(\w)/g, (g, w) => g.toUpperCase()),
+    value
+  }))
+
+  const handleAreaSelect = e => setArea(e)
+
+  const profileEdit = {
+    pathname: '/edit',
+    state: {
+      profile: true
+    }
+  }
+  const contactEdit = {
+    pathname: '/edit',
+    state: {
+      profile: false,
+      contact: true
+    }
+  }
+
+  return (
+    <Container maxWidth='sm' className={classes.container}>
+      <Paper className={classes.root}>
+        <h2 className='text-2xl'>Welcome to AADS!</h2>
+        <p className='text-gray-300 italic'>
+          Press <kbd className='kbd'>+</kbd> to demo auto alert!
+        </p>
+        <Grid container fullWidth spacing={2} className={classes.infoGrid}>
+          <Grid item xs={6}>
+            <section className='profile'>
+              <Link to={profileEdit} className='button section__edit'>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </Link>
+              <img className='profile__picture' src={personImg} alt='' />
+              <p className='profile__name'>
+                <b>Name: </b>John Doe
+              </p>
+              <p className='profile__license'>
+                <b>Driving License Number: </b>9126189361
+              </p>
+            </section>
+          </Grid>
+          <Grid item xs={6}>
+            <section className='emergency'>
+              <Link to={contactEdit} className='button section__edit'>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </Link>
+              <p className='text-lg'>Emergency Contact</p>
+              <p className='emergency__name'>
+                <b>Name: </b>Jane Doe
+              </p>
+              <p className='emergency__number'>
+                <b>Phone Number: </b> +8801701227057
+              </p>
+            </section>
+          </Grid>
+        </Grid>
+
+        <section className='flex'>
+          <FormControl variant='outlined' fullWidth className={classes.select}>
+            <InputLabel id='area-select-label'>Area</InputLabel>
+            <Select
+              name='area'
+              id='area'
+              labelId='area-select-label'
+              onChange={handleAreaSelect}
+              value={area}
+              label='Area'>
+              {areas.map(({ value, label }) => (
+                <MenuItem value={value} key={value}>
+                  {label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Button variant='outlined' color='primary' size='large'>
+            <FontAwesomeIcon icon={faLocationArrow} />
+          </Button>
+        </section>
+        <section className='police' dangerouslySetInnerHTML={{ __html: policeInfo }} />
+        <Button
+          variant='contained'
+          color='secondary'
+          size='large'
+          fullWidth
+          className='mt-4'
+          onClick={handleManualReport}>
+          Manually Report Accident!
+        </Button>
+      </Paper>
+    </Container>
+  )
+}
+export default Main
+
+function createEmergencyAlert(phoneNums) {
+  return () =>
     Alert.fire({
       timer: 20e3,
       icon: 'warning',
@@ -85,94 +230,4 @@ const Main = () => {
         pols.forEach(number => setTimeout(() => number.click(), 15e3))
       }
     })
-
-  const handleKeyPress = e => {
-    if (e.key === '+') showAccidentAlert()
-  }
-
-  const handleManualReport = e => {
-    e.preventDefault()
-    showAccidentAlert()
-  }
-
-  useEffect(() => {
-    document.body.addEventListener('keypress', handleKeyPress)
-    return () => {
-      document.body.removeEventListener('keypress', handleKeyPress)
-    }
-  }, [handleKeyPress])
-
-  const areas = Object.keys(DMP_BRANCHES).map(value => ({
-    label: value.replace(/^(\w)|\W(\w)/g, (g, w) => g.toUpperCase()),
-    value
-  }))
-
-  const handleAreaSelect = e => setArea(e.target.value)
-
-  const profileEdit = {
-    pathname: '/edit',
-    state: {
-      profile: true
-    }
-  }
-  const contactEdit = {
-    pathname: '/edit',
-    state: {
-      profile: false,
-      contact: true
-    }
-  }
-
-  return (
-    <div className='card-page'>
-      <h2 className='text-2xl'>Welcome to AADS!</h2>
-      <p className='text-gray-300 italic'>
-        Press <kbd className='kbd'>+</kbd> to demo auto alert!
-      </p>
-      <section className='profile'>
-        <Link to={profileEdit} className='button section__edit'>
-          <FontAwesomeIcon icon={faPencilAlt} />
-        </Link>
-        <img className='profile__picture' src={personImg} alt='' />
-        <p className='profile__name'>
-          <b>Name: </b>John Doe
-        </p>
-        <p className='profile__license'>
-          <b>Driving License Number: </b>9126189361
-        </p>
-      </section>
-      <section className='emergency'>
-        <Link to={contactEdit} className='button section__edit'>
-          <FontAwesomeIcon icon={faPencilAlt} />
-        </Link>
-        <p className='text-lg'>Emergency Contact</p>
-        <p className='emergency__name'>
-          <b>Name: </b>Jane Doe
-        </p>
-        <p className='emergency__number'>
-          <b>Phone Number: </b> +8801701227057
-        </p>
-      </section>
-      <label htmlFor='area' className='w-100 text-gray-300 text-left mt-2'>
-        Select you area
-      </label>
-      <section className='flex items-center'>
-        <select name='area' id='area' className='input-field' onChange={handleAreaSelect} value={area}>
-          {areas.map(({ value, label }) => (
-            <option value={value} key={value}>
-              {label}
-            </option>
-          ))}
-        </select>
-        <Button className='ml-2'>
-          <FontAwesomeIcon icon={faLocationArrow} />
-        </Button>
-      </section>
-      <section className='police' dangerouslySetInnerHTML={{ __html: policeInfo }} />
-      <Button variant='red' className='mt-4' onClick={handleManualReport}>
-        Manually Report Accident!
-      </Button>
-    </div>
-  )
 }
-export default Main

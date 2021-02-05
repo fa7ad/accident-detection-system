@@ -1,7 +1,23 @@
-import Button from 'components/Button'
+import clsx from 'clsx'
 import { useHistory } from 'react-router-dom'
+import { makeStyles, Button, Container, Typography, Grid, Paper } from '@material-ui/core'
+
+import logo from 'logo.svg'
+
+const useStyles = makeStyles(theme => ({
+  logoImage: {
+    width: '10em'
+  },
+  root: {
+    padding: theme.spacing(4, 0, 6)
+  },
+  heroButtons: {
+    marginTop: theme.spacing(4)
+  }
+}))
 
 const Home = () => {
+  const classes = useStyles()
   const history = useHistory()
 
   const handleLogin = () => {
@@ -13,19 +29,33 @@ const Home = () => {
   }
 
   return (
-    <div className='card-page'>
-      <h2 className='text-2xl'>Welcome!</h2>
-      <h3 className='text-xl'>Please choose an option below.</h3>
-      <div className='flex flex-col mt-4'>
-        <Button variant='gray' onClick={handleLogin}>
-          Login
-        </Button>
-        <div className='text-gray-300'>or</div>
-        <Button variant='purple' onClick={handleRegister}>
-          Register
-        </Button>
-      </div>
-    </div>
+    <Container maxWidth='sm'>
+      <Paper className={classes.root}>
+        <img src={logo} alt='' className={clsx('mb-4 mx-auto', classes.logoImage)} />
+
+        <Typography component='h1' variant='h2' align='center' color='textPrimary' gutterBottom>
+          Welcome
+        </Typography>
+        <Typography variant='subtitle1' align='center' color='textSecondary' paragraph>
+          ADRS is an application that uses your smartphone's sensors and an innovative algorithms to detect, report and
+          rescue you from a potentially fatal vehicular accident.
+        </Typography>
+        <div className={classes.heroButtons}>
+          <Grid container spacing={2} justify='center'>
+            <Grid item>
+              <Button color='primary' variant='contained' onClick={handleRegister}>
+                Register
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button color='primary' variant='outlined' onClick={handleLogin}>
+                Login
+              </Button>
+            </Grid>
+          </Grid>
+        </div>
+      </Paper>
+    </Container>
   )
 }
 export default Home

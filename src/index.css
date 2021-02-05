@@ -4,56 +4,27 @@
 
 body,
 html {
-  @apply min-h-full bg-gray-100;
+  height: 100%;
+
+  @apply bg-gray-100;
 }
 
 #root {
-  @apply container mx-auto h-full flex justify-center items-center min-h-screen;
+  height: 100%;
+  width: 100%;
+  display: flex;
 }
 
-.card-page {
-  @apply bg-white shadow-lg p-6 rounded-lg text-center;
-  @apply w-full sm:max-w-lg min-h-screen sm:min-h-0 flex flex-col justify-center;
+.empty {
+  min-height: 5em;
 }
 
 .kbd {
   @apply bg-white border border-gray-200 rounded-sm shadow-sm text-black px-1 not-italic;
 }
 
-.input-field {
-  @apply p-4 my-2 rounded-md shadow-inner placeholder-gray-400 text-gray-900 appearance-none;
-  @apply w-full focus:outline-none ring-blue-200 ring-1 focus:ring-blue-600;
-}
-
-select.input-field {
-  background:
-    url("data:image/svg+xml;utf8,<svg fill='black' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>")
-    no-repeat right center / 24px 24px;
-}
-
-.button {
-  @apply focus:outline-none focus:ring-2 focus:ring-opacity-50 text-white rounded-md shadow-md p-4 my-1;
-  @apply bg-gray-700 focus:bg-gray-900 hover:bg-gray-800 focus:ring-gray-600;
-}
-
-.button.red {
-  @apply bg-red-700 focus:bg-red-900 hover:bg-red-800 focus:ring-red-600;
-}
-
-.button.blue {
-  @apply bg-blue-700 focus:bg-blue-900 hover:bg-blue-800 focus:ring-blue-600;
-}
-
-.button.indigo {
-  @apply bg-indigo-700 focus:bg-indigo-900 hover:bg-indigo-800 focus:ring-indigo-600;
-}
-
-.button.purple {
-  @apply bg-purple-700 focus:bg-purple-900 hover:bg-purple-800 focus:ring-purple-600;
-}
-
 .profile {
-  @apply flex flex-col items-center p-4 border border-gray-300 my-2 rounded-xl;
+  @apply flex flex-col items-center p-4 border border-gray-300 rounded-md;
 }
 
 .profile__name,
@@ -66,7 +37,7 @@ select.input-field {
 }
 
 .emergency {
-  @apply flex flex-col items-center p-4 border border-gray-300 my-2 rounded-xl;
+  @apply flex flex-col items-center p-4 border border-gray-300 rounded-md;
 }
 
 .emergency__name,
@@ -75,7 +46,7 @@ select.input-field {
 }
 
 .police {
-  @apply rounded-lg border border-gray-300 my-4 text-xs p-2;
+  @apply rounded-md border border-gray-300 my-4 text-xs p-2;
 }
 
 .su-spoiler-title {
@@ -93,6 +64,21 @@ body.swal2-shown .swal2-content {
 
 section {
   @apply relative;
+}
+
+form {
+  @apply w-full;
+}
+
+@media (max-width: 600px) {
+  .MuiContainer-root.MuiContainer-maxWidthSm {
+    padding: 0;
+  }
+
+  .MuiContainer-root.MuiContainer-maxWidthSm > .MuiPaper-root {
+    box-shadow: none;
+    border: 0;
+  }
 }
 
 .section__edit {

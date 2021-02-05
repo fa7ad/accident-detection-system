@@ -1,6 +1,6 @@
 {
-  "short_name": "AADS",
-  "name": "Accident Detection System",
+  "short_name": "ADRS",
+  "name": "Accident Detection & Rescue System",
   "icons": [
     {
       "src": "favicon.ico",
