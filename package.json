@@ -59,7 +59,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.21.5",
-    "postcss": "^7",
+    "postcss": "^8",
     "prettier": "^2.2.1",
     "rescript-use-postcss-config": "^1.0.0",
     "stylelint": "^13.8.0",
